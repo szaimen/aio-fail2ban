@@ -10,7 +10,7 @@ while ! [ -f /nextcloud/data/nextcloud.log ]; do
     sleep 5
 done
 
-cat << FILTER > /etc/fail2ban/filter.d/nextcloud.log
+cat << FILTER > /etc/fail2ban/filter.d/nextcloud.conf
 [Definition]
 _groupsre = (?:(?:,?\s*"\w+":(?:"[^"]+"|\w+))*)
 failregex = ^\{%(_groupsre)s,?\s*"remoteAddr":"<HOST>"%(_groupsre)s,?\s*"message":"Login failed:
