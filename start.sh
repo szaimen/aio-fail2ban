@@ -26,9 +26,9 @@ cat << JAIL > /etc/fail2ban/jail.d/nextcloud.local
 backend = auto
 enabled = true
 port = 80,443,8080,8443,3478
-protocol = tcp
+protocol = tcp,udp
 filter = nextcloud
-maxretry = 3
+maxretry = 10
 bantime = 86400
 findtime = 43200
 logpath = /nextcloud/data/nextcloud.log
