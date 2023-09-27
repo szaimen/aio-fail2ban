@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Fix socket
+rm -f /run/fail2ban/*
+
 if ! mountpoint -q /nextcloud; then
     echo "/nextcloud is not a mountpoint which it must be!"
     exit 1
