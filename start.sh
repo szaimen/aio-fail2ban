@@ -91,4 +91,31 @@ chain=DOCKER-USER
 BWA_JAIL_CONF
 fi
 
+if [ -d /jellyfin/log ]; then
+    echo "Configuring jellyfin for logs"
+    # Jellyfin conf
+    cat << JELLYFIN_CONF > /etc/fail2ban/filter.d/jellyfin.conf
+[INCLUDES]
+before = common.conf
+
+[Definition]
+failregex = ^.*Authentication request for .* has been denied \(IP: "<ADDR>"\)\.
+JELLYFIN_CONF
+
+    # Jellyfin jail
+    cat << JELLYFIN_JAIL_CONF > /etc/fail2ban/jail.d/jellyfin.local
+[jellyfin]
+enabled = true
+port = 80,443,8096,8920,1900,7359
+protocol = tcp,udp
+filter = jellyfin
+banaction = %(banaction_allports)s
+maxretry = 3
+bantime = 86400
+findtime = 43200
+logpath = /jellyfin/log/*.log
+chain=DOCKER-USER
+JELLYFIN_JAIL_CONF
+fi
+
 fail2ban-server -f --logtarget stderr --loglevel info 
