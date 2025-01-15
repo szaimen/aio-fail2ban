@@ -26,16 +26,16 @@ FILTER
 
 cat << JAIL > /etc/fail2ban/jail.d/nextcloud.local
 [nextcloud]
-backend = auto
 enabled = true
 port = 80,443,8080,8443,3478
 protocol = tcp,udp
 filter = nextcloud
-action = iptables-allports[name=nextcloud, chain=DOCKER-USER]
+banaction = %(banaction_allports)s
 maxretry = 3
 bantime = 14400
 findtime = 14400
 logpath = /nextcloud/data/nextcloud.log
+chain=DOCKER-USER
 JAIL
 
 if [ -f /vaultwarden/vaultwarden.log ]; then
@@ -53,16 +53,16 @@ BW_CONF
     # Vaultwarden jail
     cat << BW_JAIL_CONF > /etc/fail2ban/jail.d/vaultwarden.local
 [vaultwarden]
-backend = auto
 enabled = true
 port = 80,443,8812
 protocol = tcp,udp
 filter = vaultwarden
-action = iptables-allports[name=vaultwarden, chain=DOCKER-USER]
+banaction = %(banaction_allports)s
 logpath = /vaultwarden/vaultwarden.log
 maxretry = 3
 bantime = 14400
 findtime = 14400
+chain=DOCKER-USER
 BW_JAIL_CONF
 
     # Vaultwarden-admin conf
@@ -78,16 +78,16 @@ BWA_CONF
     # Vaultwarden-admin jail
     cat << BWA_JAIL_CONF > /etc/fail2ban/jail.d/vaultwarden-admin.local
 [vaultwarden-admin]
-backend = auto
 enabled = true
 port = 80,443,8812
 protocol = tcp,udp
 filter = vaultwarden-admin
-action = iptables-allports[name=vaultwarden-admin, chain=DOCKER-USER]
+banaction = %(banaction_allports)s
 logpath = /vaultwarden/vaultwarden.log
 maxretry = 3
 bantime = 14400
 findtime = 14400
+chain=DOCKER-USER
 BWA_JAIL_CONF
 fi
 
