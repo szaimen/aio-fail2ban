@@ -118,7 +118,7 @@ chain=DOCKER-USER
 JELLYFIN_JAIL_CONF
 fi
 
-if [ -d /jellyseerr/log ]; then
+if [ -d /jellyseerr/logs ]; then
     echo "Configuring jellyseerr for logs"
     # Jellyseerr conf
     cat << JELLYSEERR_CONF > /etc/fail2ban/filter.d/jellyseerr.conf
