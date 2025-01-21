@@ -118,4 +118,31 @@ chain=DOCKER-USER
 JELLYFIN_JAIL_CONF
 fi
 
+if [ -d /jellyseerr/logs ]; then
+    echo "Configuring jellyseerr for logs"
+    # Jellyseerr conf
+    cat << JELLYSEERR_CONF > /etc/fail2ban/filter.d/jellyseerr.conf
+[INCLUDES]
+before = common.conf
+
+[Definition]
+failregex = .*\[warn\]\[API\]\: Failed sign-in attempt.*"ip":"<HOST>"
+JELLYSEERR_CONF
+
+    # Jellyseerr jail
+    cat << JELLYSEERR_JAIL_CONF > /etc/fail2ban/jail.d/jellyseerr.local
+[jellyseerr]
+enabled = true
+port = 80,443,5055
+protocol = tcp,udp
+filter = jellyseerr
+banaction = %(banaction_allports)s
+maxretry = 3
+bantime = 86400
+findtime = 43200
+logpath = /jellyseerr/logs/*.log
+chain=DOCKER-USER
+JELLYSEERR_JAIL_CONF
+fi
+
 fail2ban-server -f --logtarget stderr --loglevel info 
