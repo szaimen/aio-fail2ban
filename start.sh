@@ -140,7 +140,7 @@ banaction = %(banaction_allports)s
 maxretry = 3
 bantime = 86400
 findtime = 43200
-logpath = /jellyseerr/log/*.log
+logpath = /jellyseerr/logs/*.log
 chain=DOCKER-USER
 JELLYSEERR_JAIL_CONF
 fi
