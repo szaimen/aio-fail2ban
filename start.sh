@@ -36,6 +36,7 @@ bantime = 14400
 findtime = 14400
 logpath = /nextcloud/data/nextcloud.log
 chain=DOCKER-USER
+ignoreip = 127.0.0.1/8 192.168.0.0/16 172.16.0.0/12 10.0.0.0/8 fd00::/8 ::1
 JAIL
 
 if [ -f /vaultwarden/vaultwarden.log ]; then
@@ -63,6 +64,7 @@ maxretry = 3
 bantime = 14400
 findtime = 14400
 chain=DOCKER-USER
+ignoreip = 127.0.0.1/8 192.168.0.0/16 172.16.0.0/12 10.0.0.0/8 fd00::/8 ::1
 BW_JAIL_CONF
 
     # Vaultwarden-admin conf
@@ -88,6 +90,7 @@ maxretry = 3
 bantime = 14400
 findtime = 14400
 chain=DOCKER-USER
+ignoreip = 127.0.0.1/8 192.168.0.0/16 172.16.0.0/12 10.0.0.0/8 fd00::/8 ::1
 BWA_JAIL_CONF
 fi
 
@@ -115,6 +118,7 @@ bantime = 86400
 findtime = 43200
 logpath = /jellyfin/log/*.log
 chain=DOCKER-USER
+ignoreip = 127.0.0.1/8 192.168.0.0/16 172.16.0.0/12 10.0.0.0/8 fd00::/8 ::1
 JELLYFIN_JAIL_CONF
 fi
 
@@ -142,6 +146,7 @@ bantime = 86400
 findtime = 43200
 logpath = /jellyseerr/logs/*.log
 chain=DOCKER-USER
+ignoreip = 127.0.0.1/8 192.168.0.0/16 172.16.0.0/12 10.0.0.0/8 fd00::/8 ::1
 JELLYSEERR_JAIL_CONF
 fi
 
