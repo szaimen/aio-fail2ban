@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Allow custom IPs to be whitelisted via environment variable
+FAIL2BAN_IGNOREIPS="${FAIL2BAN_IGNOREIPS:-}"
+
 # Fix socket
 rm -f /run/fail2ban/*
 
@@ -36,7 +39,7 @@ bantime = 14400
 findtime = 14400
 logpath = /nextcloud/data/nextcloud.log
 # chain=DOCKER-USER
-ignoreip = 127.0.0.1/8 192.168.0.0/16 172.16.0.0/12 10.0.0.0/8 fd00::/8 ::1
+ignoreip = 127.0.0.1/8 192.168.0.0/16 172.16.0.0/12 10.0.0.0/8 fd00::/8 ::1${FAIL2BAN_IGNOREIPS:+ }${FAIL2BAN_IGNOREIPS}
 JAIL
 
 rm -f /etc/fail2ban/jail.d/nextcloud.local
@@ -69,7 +72,7 @@ maxretry = 3
 bantime = 14400
 findtime = 14400
 # chain=DOCKER-USER
-ignoreip = 127.0.0.1/8 192.168.0.0/16 172.16.0.0/12 10.0.0.0/8 fd00::/8 ::1
+ignoreip = 127.0.0.1/8 192.168.0.0/16 172.16.0.0/12 10.0.0.0/8 fd00::/8 ::1${FAIL2BAN_IGNOREIPS:+ }${FAIL2BAN_IGNOREIPS}
 BW_JAIL_CONF
 
     rm -f /etc/fail2ban/jail.d/vaultwarden.local
@@ -100,7 +103,7 @@ maxretry = 3
 bantime = 14400
 findtime = 14400
 # chain=DOCKER-USER
-ignoreip = 127.0.0.1/8 192.168.0.0/16 172.16.0.0/12 10.0.0.0/8 fd00::/8 ::1
+ignoreip = 127.0.0.1/8 192.168.0.0/16 172.16.0.0/12 10.0.0.0/8 fd00::/8 ::1${FAIL2BAN_IGNOREIPS:+ }${FAIL2BAN_IGNOREIPS}
 BWA_JAIL_CONF
 
     rm -f /etc/fail2ban/jail.d/vaultwarden-admin.local
@@ -133,7 +136,7 @@ bantime = 86400
 findtime = 43200
 logpath = /jellyfin/log/*.log
 # chain=DOCKER-USER
-ignoreip = 127.0.0.1/8 192.168.0.0/16 172.16.0.0/12 10.0.0.0/8 fd00::/8 ::1
+ignoreip = 127.0.0.1/8 192.168.0.0/16 172.16.0.0/12 10.0.0.0/8 fd00::/8 ::1${FAIL2BAN_IGNOREIPS:+ }${FAIL2BAN_IGNOREIPS}
 JELLYFIN_JAIL_CONF
 
     rm -f /etc/fail2ban/jail.d/jellyfin.local
@@ -166,7 +169,7 @@ bantime = 86400
 findtime = 43200
 logpath = /jellyseerr/logs/*.log
 # chain=DOCKER-USER
-ignoreip = 127.0.0.1/8 192.168.0.0/16 172.16.0.0/12 10.0.0.0/8 fd00::/8 ::1
+ignoreip = 127.0.0.1/8 192.168.0.0/16 172.16.0.0/12 10.0.0.0/8 fd00::/8 ::1${FAIL2BAN_IGNOREIPS:+ }${FAIL2BAN_IGNOREIPS}
 JELLYSEERR_JAIL_CONF
 
     rm -f /etc/fail2ban/jail.d/jellyseerr.local
