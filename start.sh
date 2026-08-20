@@ -175,4 +175,38 @@ JELLYSEERR_JAIL_CONF
     sed -i "s|^# chain|chain|" /etc/fail2ban/jail.d/jellyseerr.local
 fi
 
+if [ -d /gitea/log ] && [ -f "/gitea/log/gitea.log" ]; then
+    echo "Configuring gitea for logs"
+    # Gitea conf
+    cat << GITEA_CONF > /etc/fail2ban/filter.d/gitea.conf
+[INCLUDES]
+before = common.conf
+
+[Definition]
+failregex = .*(Failed authentication attempt|invalid credentials|Attempted access of unknown user).* from <HOST>
+ignoreregex =
+GITEA_CONF
+
+    # Gitea jail
+    cat << GITEA_JAIL_CONF > /etc/fail2ban/jail.d/gitea-host.local
+[gitea-host]
+enabled = true
+port = 80,443,3000,2222
+protocol = tcp,udp
+filter = gitea
+banaction = %(banaction_allports)s
+maxretry = 3
+bantime = 14400
+findtime = 14400
+logpath = /gitea/log/gitea.log
+# chain=DOCKER-USER
+ignoreip = 127.0.0.1/8 192.168.0.0/16 172.16.0.0/12 10.0.0.0/8 fd00::/8 ::1
+GITEA_JAIL_CONF
+
+    rm -f /etc/fail2ban/jail.d/gitea.local
+    cp /etc/fail2ban/jail.d/gitea-host.local /etc/fail2ban/jail.d/gitea.local
+    sed -i "s|\[gitea-host\]|\[gitea\]|" /etc/fail2ban/jail.d/gitea.local
+    sed -i "s|^# chain|chain|" /etc/fail2ban/jail.d/gitea.local
+fi
+
 fail2ban-server -f --logtarget stderr --loglevel info 
