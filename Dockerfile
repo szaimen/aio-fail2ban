@@ -2,6 +2,7 @@ FROM alpine:3.24.2
 
 # hadolint ignore=DL3018
 RUN set -ex; \
+    apk upgrade --no-cache -a; \
     apk add --no-cache fail2ban tzdata util-linux-misc bash nftables ip6tables; \
     mv /etc/fail2ban/filter.d/common.conf /tmp/; \
     rm -r /etc/fail2ban/jail.d/*; \
