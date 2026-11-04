@@ -11,7 +11,7 @@ RUN set -ex; \
 
 COPY --chmod=775 start.sh /start.sh
 
-# hadolint ignore=DL3002
+# hadolint ignore=DL3002,DL3066
 USER root
 ENTRYPOINT [ "/start.sh" ]
 
